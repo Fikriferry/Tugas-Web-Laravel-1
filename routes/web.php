@@ -3,32 +3,37 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/produk', function () {
-    $produk = [
-        ['nama' => 'Laptop', 'harga' => 15000000],
-        ['nama' => 'Smartphone', 'harga' => 5000000],
-        ['nama' => 'Tablet', 'harga' => 3000000]
-    ];
-    return view('produk', ['produk' => $produk]);
-});
-
-Route::get('/keranjang', function () {
-    // Logika untuk menampilkan keranjang belanja
-    return "Halaman keranjang belanja";
-});
-
-Route::get('/checkout', function () {
-    // Logika untuk melakukan checkout
-    return "Halaman checkout";
-});
-
-Route::get('/welcome', function () {
+Route::get('/p', function () {
     return view('welcome');
 })->name('home');
 
 Route::get('/', function () {
-    return view('home');
-})->name('home');
+    return view('web.homepage');
+});
+
+Route::get('/products', function () {
+    return view('web.products');
+});
+
+Route::get('products/{slug}', function ($slug) {
+    return view('web.single_products');
+});
+
+Route::get('/categories', function () {
+    return view('web.categories');
+});
+
+Route::get('categories/{slug}', function ($slug) {
+    return view('web.single_categories');
+});
+
+Route::get('/cart', function () {
+    return view('web.cart');
+});
+
+Route::get('/chekout', function () {
+    return view('web.checkout');
+});
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
