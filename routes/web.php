@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -19,9 +24,12 @@ Route::get('cart', [HomepageController::class, 'cart']);
 Route::get('checkout', [HomepageController::class, 'checkout']);
 
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::group(['prefix'=>'dashboard'], function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('posts', PostController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', ProductCategoryController::class);
+   })->middleware(['auth', 'verified']);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
